@@ -1,13 +1,3 @@
----
-Crafted by [Genie](https://marketplace.visualstudio.com/items?itemName=genieai.chatgpt-vscode)
-ID: MVOHySdlEqmDK1Halnk2SgyPzFaa7PyX
----
-
-# New chat
-
-*Created: 3/30/2023, 12:17:33 PM*
-
-*Modified: 3/30/2023, 1:18:52 PM*
 
 ## You
 
@@ -166,25 +156,51 @@ class CustomMail extends Mailable
 7. Finally, create the HTML form that allows users to select multiple recipients and enter the subject and message. Something like this:
 
 ```html
-<form action="{{ route('send-emails') }}" method="POST">
-    @csrf
+<div class="card-body">
+    <form method="post" action="{{ route('bulkEmail.store') }}">
+        @csrf
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <h6 class="mb-0">User Mail</h6>
+            </div>
+            <div class="form-group text-secondary col-sm-8">
+                <select name="recipients[]" class="form-control multiselect"
+                    multiple="multiple" data-include-select-all-option="true"
+                    data-enable-filtering="true"
+                    data-enable-case-insensitive-filtering="true">
+                    @foreach ($users as $user)
+                        <option value="{{ $user->email }}">{{ $user->email }} </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
-    <div class="form-group">
-        <label for="recipients">Recipients</label>
-        <select name="recipients[]" id="recipients" class="form-control" multiple required>
-            <option value="user1@example.com">User 1</option>
-            <option value="user2@example.com">User 2</option>
-            <option value="user3@example.com">User 3</option>
-        </select>
-    </div>
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <h6 class="mb-0">Subject </h6>
+            </div>
+            <div class="form-group col-sm-8 text-secondary">
+                <input type="text" name="subject" class="form-control maxlength"
+                    maxlength="100" />
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-4">
+                <h6 class="mb-0">Message </h6>
+            </div>
+            <div class="form-group col-sm-8 text-secondary">
+                <input type="text" name="message" class="form-control maxlength"
+                    maxlength="255" />
+            </div>
+        </div>
 
-    <div class="form-group">
-        <label for="subject">Subject</label>
-        <input type="text" name="subject" id="subject" class="form-control" required>
-    </div>
-
-    <div class="form-group">
-        <label for="message">Message</label>
-        <textarea name="message" id="message" class="form-control" rows="5" required>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-8 text-secondary">
+                <input type="submit" class="btn btn-primary px-4 mt-5" value="Submit" />
+            </div>
+        </div>
+    </form>
+</div>
 
 ```
