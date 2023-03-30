@@ -1,8 +1,5 @@
 
-## You
-
-how to send Laravel 8 multiple Bulk Mail where user select multi user and also send subject and messages
-## Captainsj😑
+## How to create Laravel-9 multiple Bulk Mail
 
 To send multiple bulk emails in Laravel 8, you can follow these steps:
 
@@ -10,7 +7,8 @@ To send multiple bulk emails in Laravel 8, you can follow these steps:
 2. In your `routes/web.php` file, create a route that will handle the form submission:
 
 ```php
-Route::post('/send-emails', 'MailController@sendEmails')->name('send-emails');
+Route::get('/send-emails', 'MailController@index')->name('send.emails.index');
+Route::post('/send-emails', 'MailController@store')->name('send.emails.store');
 ```
 
 3. In your `app/Http/Controllers/MailController.php` file, create a method that will handle the form submission and send the emails:
@@ -157,7 +155,7 @@ class CustomMail extends Mailable
 
 ```html
 <div class="card-body">
-    <form method="post" action="{{ route('bulkEmail.store') }}">
+    <form method="post" action="{{ route('send.emails.store') }}">
         @csrf
         <div class="row mb-3">
             <div class="col-sm-4">
